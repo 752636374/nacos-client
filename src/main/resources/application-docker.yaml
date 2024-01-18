@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.18.0.18:8848
+        enabled: true
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG

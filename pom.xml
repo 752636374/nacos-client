@@ -60,5 +60,63 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+
+    <build>
+        <!-- 这里设置构建的文件名；默认情况下文件名为：artifactId+version -->
+        <finalName>spring-boot-demo</finalName>
+        <resources>
+            <resource>
+                <!--配置文件路径  -->
+                <directory>src/main/resources</directory> <!--这里对应项目存放配置文件的目录-->
+                <!--开启filtering功能  -->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!-- 插件配置 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+
+
+    <!-- 配置项目的profiles,一般用于多环境的情况 -->
+    <profiles>
+        <!-- docker环境 -->
+        <profile>
+            <id>docker</id>
+            <properties>
+                <env>docker</env>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+        <!-- local环境 -->
+        <profile>
+            <id>local</id>
+            <properties>
+                <env>local</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 </project>
 
