@@ -10,4 +10,12 @@ spring:
         file-extension: yaml # 配置文件格式
         refresh: true
         refresh-enabled: true
+      discovery:
+        server-addr: 127.0.0.1:8848
+        enabled: true
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
 
