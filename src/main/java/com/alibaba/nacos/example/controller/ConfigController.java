@@ -1,6 +1,5 @@
-package com.alibaba.nacos.example;
+package com.alibaba.nacos.example.controller;
 
-import com.alibaba.nacos.api.config.annotation.NacosValue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,7 @@ public class ConfigController {
 
 
     @RequestMapping
-    public String name(){
-        return  name;
+    public String name() {
+        return name;
     }
 }
