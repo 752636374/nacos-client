@@ -6,7 +6,7 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 172.18.0.18:8848 #nacos中心地址
+        server-addr: nacos:8848 #nacos中心地址
         file-extension: yaml # 配置文件格式
         refresh: true
         refresh-enabled: true
