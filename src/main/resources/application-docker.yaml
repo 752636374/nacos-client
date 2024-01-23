@@ -16,7 +16,7 @@ spring:
     lettuce:
       shutdown-timeout: 0
 rocketmq:
-  name-server: 72.18.0.9:9876 # 访问地址
+  name-server: 172.18.0.9:9876 # 访问地址
   producer:
     group: broker-a # 必须指定group
     send-message-timeout: 3000 # 消息发送超时时长，默认3s
