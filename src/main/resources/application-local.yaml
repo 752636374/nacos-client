@@ -23,9 +23,7 @@ rocketmq:
     retry-times-when-send-failed: 3 # 同步发送消息失败重试次数，默认2
     retry-times-when-send-async-failed: 3 # 异步发送消息失败重试次数，默认2
 
-server:
-  servlet:
-    context-path: /nacos-client
+
 
 logging:
   level:
