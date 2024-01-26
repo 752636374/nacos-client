@@ -15,6 +15,8 @@ spring:
         min-idle: 0
     lettuce:
       shutdown-timeout: 0
+
+#rocketmq
 rocketmq:
   name-server: 127.0.0.1:9876 # 访问地址
   producer:
@@ -23,8 +25,16 @@ rocketmq:
     retry-times-when-send-failed: 3 # 同步发送消息失败重试次数，默认2
     retry-times-when-send-async-failed: 3 # 异步发送消息失败重试次数，默认2
 
+#es
+elasticsearch:
+  host: localhost
+  port: 9200
+  connTimeout: 3000
+  socketTimeout: 5000
+  connectionRequestTimeout: 500
 
 
+#日志
 logging:
   level:
     org:

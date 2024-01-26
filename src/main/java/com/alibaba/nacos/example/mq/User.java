@@ -1,4 +1,4 @@
-package com.alibaba.nacos.example.controller.mq;
+package com.alibaba.nacos.example.mq;
 
 import lombok.Data;
 

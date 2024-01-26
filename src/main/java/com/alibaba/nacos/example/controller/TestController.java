@@ -1,4 +1,4 @@
-package com.alibaba.nacos.example.controller.consumer;
+package com.alibaba.nacos.example.controller;
 
 
 import org.springframework.cloud.client.discovery.DiscoveryClient;

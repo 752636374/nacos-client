@@ -11,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 public class NacosClientApplication {
     public static void main(String[] args) {
+        //看这里，加上这句话
+        System.setProperty("es.set.netty.runtime.available.processors","false");
         SpringApplication.run(NacosClientApplication.class, args);
     }
 

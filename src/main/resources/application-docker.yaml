@@ -23,6 +23,12 @@ rocketmq:
     retry-times-when-send-failed: 3 # 同步发送消息失败重试次数，默认2
     retry-times-when-send-async-failed: 3 # 异步发送消息失败重试次数，默认2
 
+elasticsearch:
+  host: elasticsearch
+  port: 9200
+  connTimeout: 3000
+  socketTimeout: 5000
+  connectionRequestTimeout: 500
 
 logging:
   level:
