@@ -1,0 +1,99 @@
+SELECT
+    reverse(user_pin),
+    prin_exceed_amt_sum/loan_id_cnt as prin_exceed_amt_avg,
+    fee_exceed_amt_sum/loan_id_cnt as fee_exceed_amt_avg,
+    day_exceed_amt_sum/loan_id_cnt as day_exceed_amt_avg,
+    over_exceed_amt_sum/loan_id_cnt as over_exceed_amt_avg,
+    pay_prefr_amt_sum/loan_id_cnt as pay_prefr_amt_avg,
+    paid_fine_amt_1m,
+    paid_fine_amt_3m,
+    paid_fine_amt_6m,
+    paid_fine_amt_12m,
+FROM(
+    select
+        -- 用户唯一标识
+        re_user_pin as user_pin,
+        -- 统计贷款单数
+        COUNT(DISTINCT loan_id) as loan_id_cnt,
+        -- 平均本金超还金额
+        SUM(CASE
+               WHEN plan_start_time_desc = 1
+               THEN prin_exceed_amt
+               ELSE NULL
+       END) as prin_exceed_amt_sum,
+        -- 平均手续费超还金额
+        SUM(CASE
+               WHEN plan_start_time_desc = 1
+               THEN fee_exceed_amt
+               ELSE NULL
+       END) as fee_exceed_amt_sum,
+        -- 平均多支付日息金额
+        SUM(CASE
+               WHEN plan_start_time_desc = 1
+               THEN day_exceed_amt
+               ELSE NULL
+        END) as day_exceed_amt_sum,
+        -- 平均逾期超还金额
+        SUM(CASE
+               WHEN plan_start_time_desc = 1
+               THEN over_exceed_amt
+               ELSE NULL
+       END) as over_exceed_amt_sum,
+        -- 平均支付中心优惠金额
+        SUM(CASE
+               WHEN plan_start_time_desc = 1
+               THEN pay_prefr_amt
+               ELSE NULL
+       END) as pay_prefr_amt_sum,
+        -- 近1个月分期次数
+        COUNT(DISTINCT (CASE
+                WHEN plan_start_time_asc = 1
+                    AND plan_start_time >=  CONCAT(date_sub('2024-01-31', 30), ' 00:00:00')
+                    AND plan_start_time <=  CONCAT('2024-01-31', ' 23:59:59')
+                THEN loan_id
+                ELSE NULL
+                END
+        )) as paid_fine_amt_1m,
+        -- 近3个月分期次数
+        COUNT(DISTINCT (CASE
+                WHEN plan_start_time_asc = 1
+                    AND plan_start_time >=  CONCAT(date_sub('2024-01-31', 90), ' 00:00:00')
+                    AND plan_start_time <=  CONCAT('2024-01-31', ' 23:59:59')
+                THEN loan_id
+                ELSE NULL
+                END
+        )) as paid_fine_amt_3m,
+        -- 近6个月分期次数
+        COUNT(DISTINCT (CASE
+                WHEN plan_start_time_asc = 1
+                    AND plan_start_time >=  CONCAT(date_sub('2024-01-31', 180), ' 00:00:00')
+                    AND plan_start_time <=  CONCAT('2024-01-31', ' 23:59:59')
+                THEN loan_id
+                ELSE NULL
+                END
+        )) as paid_fine_amt_6m,
+        -- 近12个月分期次数
+        COUNT(DISTINCT (CASE
+                WHEN create_time_desc = 1
+                    AND plan_start_time >=  CONCAT(date_sub('2024-01-31', 360), ' 00:00:00')
+                    AND plan_start_time <=  CONCAT('2024-01-31', ' 23:59:59')
+                THEN loan_id
+                ELSE NULL
+                END
+        )) as paid_fine_amt_12m
+    FROM
+        (
+            SELECT
+            reverse(lower(user_pin)) AS re_user_pin,
+            prin_exceed_amt,
+            fee_exceed_amt,
+            day_exceed_amt,
+            day_exceed_amt,
+            over_exceed_amt,
+            pay_prefr_amt,
+            -- 根据贷款单号group，根据分期单开始时间降序排序
+            row_number() over(partition BY loan_id order by create_time DESC) create_time_desc
+            FROM idm.idm_f02_cf_xbt_repay_dtl_s_d where dt = '2024-01-31'
+        ) a
+        GROUP BY re_user_pin
+) b
