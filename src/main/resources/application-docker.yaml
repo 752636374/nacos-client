@@ -15,6 +15,13 @@ spring:
         min-idle: 0
     lettuce:
       shutdown-timeout: 0
+  zipkin:
+    base-url: http://zipkin:9411/
+    sleuth:
+      sampler:
+        #采样率值介于 0 到 1 之间，1 则表示全部采集
+        probability: 1
+        rate: 10
 rocketmq:
   name-server: rmqnamesrv:9876 # 访问地址
   producer:
