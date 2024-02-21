@@ -24,6 +24,37 @@ spring:
       probability: 1
       rate: 10
 
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/test
+    username: root
+    password:
+    driver-class-name: com.mysql.jdbc.Driver
+    # 数据源更改为druid
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 连接池配置
+      # 配置初始化大小、最小、最大
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 3000
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      pool-prepared-statements: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat,wall,slf4j
+
+# 加载mybati的全局配置文件
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+
+
 #rocketmq
 rocketmq:
   name-server: 127.0.0.1:9876 # 访问地址
