@@ -50,12 +50,14 @@ public class MQProducerService {
         rocketMQTemplate.asyncSend(topic, MessageBuilder.withPayload(msgBody).build(), new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
+                log.info("发送mq成功");
                 // 处理消息发送成功逻辑
             }
 
             @Override
             public void onException(Throwable throwable) {
                 // 处理消息发送异常逻辑
+                log.error("发送mq失败");
             }
         });
     }

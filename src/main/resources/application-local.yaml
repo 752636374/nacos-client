@@ -42,6 +42,8 @@ spring:
       validation-query: SELECT 1 FROM DUAL
       test-on-borrow: false
       test-on-return: false
+
+
       test-while-idle: true
       pool-prepared-statements: true
       time-between-eviction-runs-millis: 60000
