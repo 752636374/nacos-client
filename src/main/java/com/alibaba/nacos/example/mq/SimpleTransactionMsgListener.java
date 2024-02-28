@@ -24,7 +24,7 @@ public class SimpleTransactionMsgListener implements RocketMQLocalTransactionLis
     /** 执行本地事务（在发送消息成功时执行）  */
     @Override
     public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object o) {
-        log.info("监听到消息：{}",message.getPayload().toString());
+        log.info("监听到消息：{}",new String((byte[]) message.getPayload(), StandardCharsets.UTF_8));
         //TODO 开启本地事务（实际就是我们的jdbc操作）
         //TODO 执行业务代码（例如插入订单数据库表等）
         //TODO 提交或回滚本地事务
